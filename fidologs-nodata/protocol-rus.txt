@@ -1,0 +1,39 @@
+Для анализа данных сделайте:
+cd scripts/
+python2 preprocess_data.py
+python2 proc_data.py
+python2 freq.py
+python2 make_vocabulary.py
+python2 reduce_space.py
+python2 clusterize.py
+python2 make_plots.py
+
+Зависимости:
+ * python 2.7
+ * nltk
+ * pymorphy2
+ * scikit
+ * numpy
+ * pylab
+
+Ход анализа:
+preprocess_data.py
+Скрипт разделяет данные по сообщениям, удаляет заююканные файлы и цитирование, присваивает каждому сообщению уникальный номер в корпусе, нормализованную по UTC дату отправки, тему без Re, получателя, текст сообщения с замещёнными на пробелы переносами (файл data/pre-2001-proc.txt)
+
+proc_data.py
+Скрипт читает предыдущий файл (data/pre-2001-proc.txt) и производит лемматизацию с помощью pymorphy2, после чего записывает сообщения в файлы (data/2001-lemmproc.txt и data/2001-lemmproc.pickle). Также создаются лемматизированные униграммы, биграммы и лемматизированные биграммы.
+
+freq.py
+Скрипт читает файл (data/2001-lemmproc.pickle) считает частоту и взвешенную (умноженную на длину) частоту сообщений от пользователя, пишет результат в файлы (results/freq-2001-uni.txt и data/2001-freq-uni.pickle)
+
+make_vocabulary.py
+Скрипт читает файл (data/2001-lemmproc.pickle) и создаёт пользовательские словари, считает TF-IDF униграмм и количество уникальных слов у пользователя, пишет эти словари в файл (data/2001-vocabs.pickle), пишет TF-IDF в файл (data/2001-tfidf-uni.pickle)
+
+reduce_space.py
+Скрипт читает файлы (data/2001-lemmproc.pickle и data/2001-tfidf-uni.pickle) и на их основании строит векторное пространство униграмм. В качестве границы используются значения TF-IDF слов чтобы отсеять слишком распространённые и слишком редкие. Пишет векторное пространство в файл (data/2001-vector_space-uni.pickle).
+
+clusterize.py
+Скрипт производит кластеризацию с помощью иерархической кластеризации и к-средних на основе данных из файлов (data/2001-vector_space-uni.pickle и data/2001-lemmproc.pickle, пишет результаты в файлы (results/clusters-2001-uni.txt и data/2001-clusters-uni.pickle)
+
+make_plots.py
+Строит кластерную диаграмму по данным кластеризации с помощью LDA.

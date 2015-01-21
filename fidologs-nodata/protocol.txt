@@ -1,0 +1,15 @@
+to analyze data run:
+cd scripts/
+python2 preprocess_data.py
+python2 proc_data.py
+python2 freq.py
+python2 make_vocabulary.py
+python2 reduce_space.py
+python2 clusterize.py
+
+DEPENDENCIES:
+ * python 2.7
+ * nltk
+ * pymorphy2
+ * scikit
+ * numpy

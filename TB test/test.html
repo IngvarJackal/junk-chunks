@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<body>
+<meta charset="UTF-8">
+<h3> Тест на необходимость посещения врача при подозрении на туберкулёз</h3>
+<p>Для успешной диагностики нужно ответить на все вопросы.</p>
+<br>
+
+<p>Вы ВИЧ-инфицированы (если не знаете, отвечайте отрицательно)?</p>
+<input type="radio" name="hiv" id="hiv_yes">Да
+<input type="radio" name="hiv" id="hiv_no">Нет
+
+<p>У Вас есть сильный кашель более двух недель?</p>
+<input type="radio" name="cough" id="cough_yes">Да
+<input type="radio" name="cough" id="cough_no">Нет
+
+<p>Есть ли во время кашля кровяные выделения?</p>
+<input type="radio" name="blood" id="blood_yes">Да
+<input type="radio" name="blood" id="blood_no">Нет
+
+<p>Присутствует ли ночная потливость?</p>
+<input type="radio" name="sweat" id="sweat_yes">Да
+<input type="radio" name="sweat" id="sweat_no">Нет
+
+<p>Чувствуете ли вы боль в грудной клетке?</p>
+<input type="radio" name="pain" id="pain_yes">Да
+<input type="radio" name="pain" id="pain_no">Нет
+
+<br>
+<button onclick="calculateResult()">Получить результаты</button>
+
+<p id="result"></p>
+
+<script>
+function getFromRadioButton(id, yes_response) {
+    if(document.getElementById(id + "_yes").checked) {
+        return yes_response;
+    } else if(document.getElementById(id + "_no").checked) {
+        return 0;
+    } else {
+        return Infinity
+    }
+}
+
+function calculateResult() {
+    var theshold = 4
+    var total = 0.0
+    var current = 0.0
+    current = getFromRadioButton("hiv", 2)
+    if (current == Infinity) {alert("Вы не ответили на вопрос про ВИЧ"); return;} else {total += current;}
+    current = getFromRadioButton("cough", 1)
+    if (current == Infinity) {alert("Вы не ответили на вопрос про кашель"); return;} else {total += current;}
+    current = getFromRadioButton("blood", 1)
+    if (current == Infinity) {alert("Вы не ответили на вопрос про кровяные выделения во время кашля"); return;} else {total += current;}
+    current = getFromRadioButton("sweat", 1)
+    if (current == Infinity) {alert("Вы не ответили на вопрос про ночную потливость"); return;} else {total += current;}
+    current = getFromRadioButton("pain", 1)
+    if (current == Infinity) {alert("Вы не ответили на вопрос про боль в грудной клетке"); return;} else {total += current;}
+
+    if (total >= theshold) {
+        document.getElementById("result").innerHTML = "Вам следует сходить к врачу";
+        alert("Вам следует сходить к врачу");
+    } else {
+        document.getElementById("result").innerHTML = "Вам не следует ходить к врачу";
+        alert("Вам не следует ходить к врачу");
+    }
+}
+</script>
+
+</body>
+</html>
+        
